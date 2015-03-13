@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DeedSimple.DataAccess.Exceptions;
 using DeedSimple.Domain;
+using PagedList;
 
 namespace DeedSimple.DataAccess
 {
@@ -26,6 +27,46 @@ namespace DeedSimple.DataAccess
                     .Select(userProp => userProp.Id)
                     .Contains(prop.Id))
                     .ToList();
+            }
+
+            return properties;
+        }
+
+        /// <summary>
+        /// Return a page of properties given the search terms, sort order, page number, and page size.
+        /// </summary>
+        /// <param name="sortOrder">The <see cref="PropertySortOrder"/> that determines the order of the returned properties.</param>
+        /// <param name="searchString">Any full string that should be matched (partial matches will fail).</param>
+        /// <returns>A <see cref="IPagedList"/> of Property objects.</returns>
+        public IEnumerable<Property> GetPropertiesFiltered(PropertySortOrder sortOrder, string searchString = null)
+        {
+            var properties = from p in _context.Properties
+                           select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                properties = properties.Where(p => p.Description.Contains(searchString)
+                                                || p.Road.Contains(searchString)
+                                                || p.Town.Contains(searchString)
+                                                || p.County.Contains(searchString)
+                                                || p.PostCode.Contains(searchString)
+                                                || p.TagLine.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case PropertySortOrder.TagLineDescending:
+                    properties = properties.OrderByDescending(p => p.TagLine);
+                    break;
+                case PropertySortOrder.AskingPriceAscending:
+                    properties = properties.OrderBy(p => p.AskingPrice);
+                    break;
+                case PropertySortOrder.AskingPriceDescending:
+                    properties = properties.OrderByDescending(p => p.AskingPrice);
+                    break;
+                default:
+                    properties = properties.OrderBy(p => p.TagLine);
+                    break;
             }
 
             return properties;

@@ -15,7 +15,7 @@ namespace DeedSimple.Models.Seller
 
         [Required]
         [Display(Name = "Property type")]
-        public PropertyType Type { get; set; }
+        public PropertyTypeModel Type { get; set; }
 
         [Required]
         [Display(Name = "Property tag line", Description = "The title that will appear on your property page")]
@@ -43,10 +43,10 @@ namespace DeedSimple.Models.Seller
 
         [Required]
         [Display(Name = "Upload some images")]
-        public List<Image> Images { get; set; }
+        public List<long> ImageIds { get; set; }
 
         [Required]
-        [Display(Name = "Asking price", Description = "For example: Offers in excess of £190,000")]
-        public string AskingPriceDescription { get; set; }
+        [Display(Name = "Asking price")]
+        public decimal AskingPrice { get; set; }
     }
 }

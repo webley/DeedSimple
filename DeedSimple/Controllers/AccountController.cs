@@ -20,17 +20,12 @@ namespace DeedSimple.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
-        private IUserProcessor _userProcessor;
+        private readonly IUserProcessor _userProcessor;
 
         public AccountController(IUserProcessor userProcessor)
         {
             _userProcessor = userProcessor;
         }
-
-        //public AccountController(ApplicationUserManager userManager)
-        //{
-        //    UserManager = userManager;
-        //}
 
         public ApplicationUserManager UserManager {
             get

@@ -1,4 +1,7 @@
-﻿using DeedSimple.Domain;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DeedSimple.Domain;
+using DeedSimple.Models;
 using DeedSimple.Models.Seller;
 
 namespace DeedSimple.Helpers
@@ -10,10 +13,9 @@ namespace DeedSimple.Helpers
             Property property = new Property
             {
                 TagLine = model.TagLine,
-                Type = model.Type,
+                Type = (PropertyType)model.Type,
                 Description = model.Description,
-                AskingPriceDescription = model.AskingPriceDescription,
-                Images = model.Images,
+                AskingPrice = model.AskingPrice,
                 Road = model.Road,
                 Town = model.Town,
                 County = model.County,
@@ -27,6 +29,37 @@ namespace DeedSimple.Helpers
         {
             EditPropertyModel model = new EditPropertyModel(propertyEntity.Id)
             {
+                Type = (PropertyTypeModel)propertyEntity.Type,
+                TagLine = propertyEntity.TagLine,
+                Road = propertyEntity.Road,
+                Town = propertyEntity.Town,
+                County = propertyEntity.County,
+                PostCode = propertyEntity.PostCode,
+                Description = propertyEntity.Description,
+                AskingPrice = propertyEntity.AskingPrice,
+                ImageIds = propertyEntity.ImageIds
+            };
+
+            return model;
+        }
+
+        public static ViewPropertyOverviewModel MapToViewPropertyOverviewModel(this Property propertyEntity)
+        {
+            var model = new ViewPropertyOverviewModel(propertyEntity.Id)
+            {
+                TagLine = propertyEntity.TagLine,
+                Description = propertyEntity.Description,
+                AskingPrice = propertyEntity.AskingPrice,
+                MainImageId = propertyEntity.ImageIds.FirstOrDefault()
+            };
+
+            return model;
+        }
+
+        public static ViewPropertyDetailsModel MapToViewPropertyDetailsModel(this Property propertyEntity)
+        {
+            var model = new ViewPropertyDetailsModel(propertyEntity.Id)
+            {
                 Type = propertyEntity.Type,
                 TagLine = propertyEntity.TagLine,
                 Road = propertyEntity.Road,
@@ -34,8 +67,8 @@ namespace DeedSimple.Helpers
                 County = propertyEntity.County,
                 PostCode = propertyEntity.PostCode,
                 Description = propertyEntity.Description,
-                AskingPriceDescription = propertyEntity.AskingPriceDescription,
-                Images = propertyEntity.Images
+                AskingPrice = propertyEntity.AskingPrice,
+                ImageIds = propertyEntity.ImageIds
             };
 
             return model;

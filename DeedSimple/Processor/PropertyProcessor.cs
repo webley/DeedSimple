@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DeedSimple.DataAccess;
 using DeedSimple.Domain;
+using PagedList;
 
 namespace DeedSimple.Processor
 {
@@ -21,6 +22,11 @@ namespace DeedSimple.Processor
         public List<Property> GetPropertiesForUser(string userId)
         {
             return _propertyRepository.GetPropertiesBySellerId(userId);
+        }
+
+        public IEnumerable<Property> GetPropertiesFiltered(PropertySortOrder sortOrder, string searchString)
+        {
+            return _propertyRepository.GetPropertiesFiltered(sortOrder, searchString);
         }
 
         public long AddPropertyForUser(string userId, Property property)

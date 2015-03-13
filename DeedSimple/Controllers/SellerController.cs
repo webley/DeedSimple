@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -14,12 +16,14 @@ namespace DeedSimple.Controllers
 {
     public class SellerController : Controller
     {
-        private readonly PropertyProcessor _propertyProcessor;
+        private readonly IPropertyProcessor _propertyProcessor;
+        private readonly IImageProcessor _imageProcessor;
         private ApplicationUserManager _userManager;
 
-        public SellerController(PropertyProcessor propertyProcessor)
+        public SellerController(IPropertyProcessor propertyProcessor, IImageProcessor imageProcessor)
         {
             _propertyProcessor = propertyProcessor;
+            _imageProcessor = imageProcessor;
         }
 
         private ApplicationUserManager UserManager

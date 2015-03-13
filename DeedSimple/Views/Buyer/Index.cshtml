@@ -1,0 +1,57 @@
+﻿@model PagedList.IPagedList<DeedSimple.Models.ViewPropertyOverviewModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Properties";
+}
+
+<h2>Properties</h2>
+
+@using (Html.BeginForm("Index", "Buyer", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Property Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            @Html.ActionLink("Asking Price", "Index", new { sortOrder = ViewBag.PriceSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th></th>
+    </tr>
+</table>
+
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <a href='@Url.Action("View", "Buyer", new {id = item.Id})'>
+                    <img src='@Url.Action("Index", "Image", new { id = item.MainImageId })' />
+                </a>
+            </div>
+            <div class="col-md-8">
+                <h4>@Html.DisplayFor(modelItem => item.TagLine)</h4>
+                <h6>@Html.DisplayFor(modelItem => item.AskingPrice)</h6>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </p>
+            </div>
+        </div>
+    }
+
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

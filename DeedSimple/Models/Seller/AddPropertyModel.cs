@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using DeedSimple.Domain;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DeedSimple.Models.Seller
 {
@@ -8,7 +6,7 @@ namespace DeedSimple.Models.Seller
     {
         [Required]
         [Display(Name = "Property type")]
-        public PropertyType Type { get; set; }
+        public PropertyTypeModel Type { get; set; }
 
         [Required]
         [Display(Name = "Property tag line", Description = "The title that will appear on your property page")]
@@ -34,12 +32,16 @@ namespace DeedSimple.Models.Seller
         [Display(Name = "Enter a description")]
         public string Description { get; set; }
 
-        [Required]
-        [Display(Name = "Upload some images")]
-        public List<Image> Images { get; set; }
+        //[Required]
+        //[Display(Name = "Upload some images")]
+        //public List<Image> Images { get; set; }
+
+        //[DataType(DataType.Upload)]
+        //public HttpPostedFileBase Image { get; set; }
 
         [Required]
-        [Display(Name = "Asking price", Description = "For example: Offers in excess of £190,000")]
-        public string AskingPriceDescription { get; set; }
+        [DataType(DataType.Currency)]
+        [Display(Name = "Asking price")]
+        public decimal AskingPrice { get; set; }
     }
 }

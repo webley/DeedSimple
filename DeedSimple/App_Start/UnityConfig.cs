@@ -15,12 +15,13 @@ namespace DeedSimple
             // register all your components with the container here
             // it is NOT necessary to register your controllers
 
-            //container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<IPropertyProcessor, PropertyProcessor>();
             container.RegisterType<IUserProcessor, UserProcessor>();
+            container.RegisterType<IImageProcessor, ImageProcessor>();
 
             container.RegisterType<IPropertyRepository, PropertyRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IImageRepository, ImageRepository>();
             
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

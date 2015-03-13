@@ -1,0 +1,74 @@
+﻿@model DeedSimple.Models.ViewPropertyDetailsModel
+
+<div>
+    <h4>ViewPropertyDetailsModel</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TagLine)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TagLine)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AskingPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AskingPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Road)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Road)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Town)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Town)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.County)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.County)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostCode)
+        </dd>
+
+    </dl>
+</div>
+@using (Html.BeginForm("PlaceOffer", "Buyer", FormMethod.Get))
+{
+    <p>
+        Place an offer for this property: £@Html.TextBox("OfferPrice", Model.AskingPrice)
+        <input type="submit" value="Place Offer" />
+    </p>
+}
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

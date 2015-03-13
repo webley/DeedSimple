@@ -45,6 +45,7 @@
     <Compile Include="Offer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
+    <Compile Include="PropertySortOrder.cs" />
     <Compile Include="PropertyType.cs" />
     <Compile Include="SellerUser.cs" />
     <Compile Include="UserType.cs" />

@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
+using DeedSimple.Domain;
 
-namespace DeedSimple.Domain
+namespace DeedSimple.Models
 {
-    public class Property
+    public class ViewPropertyDetailsModel
     {
-        public long Id { get; set; }
+        public ViewPropertyDetailsModel(long id)
+        {
+            Id = id;
+        }
+
+        public long Id { get; private set; }
         public PropertyType Type { get; set; }
         public string TagLine { get; set; }
         public string Description { get; set; }
@@ -15,8 +21,6 @@ namespace DeedSimple.Domain
         public string County { get; set; }
         public string PostCode { get; set; }
 
-        public List<long> ImageIds { get; set; }
-
-        public virtual List<Offer> OutstandingOffers { get; set; }
+        public virtual List<long> ImageIds { get; set; }
     }
 }
