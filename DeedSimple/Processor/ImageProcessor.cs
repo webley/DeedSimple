@@ -17,9 +17,9 @@ namespace DeedSimple.Processor
             return _imageRepository.GetImage(imageId);
         }
 
-        public long AddImage(Image image)
+        public long AddImage(long propertyId, Image image)
         {
-            return _imageRepository.AddImage(image);
+            return _imageRepository.AddImage(propertyId, image);
         }
     }
 }

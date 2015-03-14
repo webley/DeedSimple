@@ -34,6 +34,11 @@ namespace DeedSimple.Processor
             return _propertyRepository.AddPropertyForUser(userId, property);
         }
 
+        public long PlaceOfferForProperty(string userId, Offer offer)
+        {
+            return _propertyRepository.PlaceOfferForProperty(userId, offer);
+        }
+
         public bool PropertyCanBeEditedByUser(long propertyId, string userId)
         {
             return _propertyRepository.PropertyCanBeEditedByUser(propertyId, userId);

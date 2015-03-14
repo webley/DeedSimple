@@ -6,7 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using DeedSimple.Domain;
 using DeedSimple.Helpers;
+using DeedSimple.Models;
 using DeedSimple.Processor;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PagedList;
 
@@ -80,7 +82,15 @@ namespace DeedSimple.Controllers
             return View(property.MapToViewPropertyDetailsModel());
         }
 
-        public ActionResult PlaceOffer()
+        [HttpPost]
+        public ActionResult PlaceOffer(ViewPropertyDetailsModel model)
+        {
+            Offer offer = new Offer{Price = model.OfferPrice, PropertyId = model.Id};
+            var offerId = _propertyProcessor.PlaceOfferForProperty(User.Identity.GetUserId(), offer);
+            return RedirectToAction("Offers");
+        }
+
+        public ActionResult Offers()
         {
             throw new NotImplementedException();
         }

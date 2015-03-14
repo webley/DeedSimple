@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using DeedSimple.Domain;
 using DeedSimple.Models.Seller;
@@ -13,6 +14,7 @@ namespace DeedSimple.Controllers
         private readonly IImageProcessor _imageProcessor;
         private readonly HashSet<string> _validImageTypes;
         private readonly string _fileStorePath;
+        private readonly string _fileStoreUri;
 
         public ImageController(IImageProcessor imageProcessor)
         {
@@ -26,7 +28,8 @@ namespace DeedSimple.Controllers
                 "image/png"
             };
 
-            _fileStorePath = "~/App_Data/UploadedImages";
+            _fileStoreUri = "~/App_Data/UploadedImages";
+            _fileStorePath = HostingEnvironment.MapPath(_fileStoreUri);
         }
 
         // GET: Image
@@ -34,7 +37,7 @@ namespace DeedSimple.Controllers
         public ActionResult Index(long id)
         {
             var image = _imageProcessor.GetImage(id);
-            return File(image.FileName, "image");
+            return File(GetImageFilePath(image.FileName), image.ContentType);
         }
 
         public ActionResult Add(long propertyId)
@@ -59,33 +62,45 @@ namespace DeedSimple.Controllers
                 if (model.Image != null && model.Image.ContentLength > 0)
                 {
                     var fileGuid = Guid.NewGuid().ToString();
-                    var mappedFileStore = Server.MapPath(_fileStorePath);
-                    var imagePath = Path.Combine(mappedFileStore, fileGuid);
+                    var imagePath = GetImageFilePath(fileGuid);
 
                     // Make sure the generated Guid / file name is unique.
                     while (System.IO.File.Exists(imagePath))
                     {
                         fileGuid = Guid.NewGuid().ToString();
-                        imagePath = Path.Combine(mappedFileStore, fileGuid);
+                        imagePath = GetImageFilePath(fileGuid);
                     }
 
-                    if (!Directory.Exists(mappedFileStore))
-                        Directory.CreateDirectory(mappedFileStore);
+                    if (!Directory.Exists(_fileStorePath))
+                        Directory.CreateDirectory(_fileStorePath);
 
                     model.Image.SaveAs(imagePath);
                     var image = new Image
                     {
                         Caption = model.Caption,
-                        FileName = fileGuid
+                        FileName = fileGuid,
+                        ContentType = model.Image.ContentType
                     };
 
-                    _imageProcessor.AddImage(image);
+                    var imageId = _imageProcessor.AddImage(model.PropertyId, image);
                 }
 
                 return RedirectToAction("Edit", "Seller", new {propertyId = model.PropertyId});
             }
 
             return View(model);
+        }
+
+        [NonAction]
+        private string GetImageFilePath(string fileName)
+        {
+            return Path.Combine(_fileStorePath, fileName);
+        }
+
+        [NonAction]
+        private string GetImageUri(string fileName)
+        {
+            return string.Format("{0}/{1}", _fileStoreUri, fileName);
         }
     }
 }

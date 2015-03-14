@@ -1,5 +1,11 @@
 ﻿@model DeedSimple.Models.User.SellerUserModel
-
+<h2>
+    Your listed properties
+</h2>
+@if (Model.Properties.Count == 0)
+{
+    <p>You currently have no properties listed with us.</p>
+}
 <p>
     @Html.ActionLink("Add New Property", "Add")
 </p>
@@ -17,9 +23,8 @@
             @Html.DisplayFor(modelItem => item.TagLine)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new { propertyId=item.Id }) |
+            @Html.ActionLink("Remove", "Delete", new { propertyId = item.Id })
         </td>
     </tr>
 }

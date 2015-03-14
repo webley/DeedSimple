@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using DeedSimple.Domain;
 using DeedSimple.Helpers;
 using DeedSimple.Models.Seller;
 using DeedSimple.Models.User;
@@ -39,7 +40,7 @@ namespace DeedSimple.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var properties = _propertyProcessor.GetPropertiesForUser(user.Id);
-            var model = new SellerUserModel { Name = user.UserName, Properties = properties };
+            var model = new SellerUserModel { Name = user.UserName, Properties = properties ?? new List<Property>() };
             return View(model);
         }
 
@@ -55,6 +56,7 @@ namespace DeedSimple.Controllers
         public async Task<ActionResult> Add(AddPropertyModel model)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
             var propertyId = _propertyProcessor.AddPropertyForUser(user.Id, model.MapToProperty());
             return RedirectToAction("Edit", new RouteValueDictionary { { "propertyId", propertyId } });
         }
@@ -69,6 +71,11 @@ namespace DeedSimple.Controllers
 
             var model = property.MapToEditPropertyModel();
             return View(model);
+        }
+
+        public ActionResult Delete(int propertyId)
+        {
+            return View(new ConfirmDeletePropertyModel{PropertyId = propertyId});
         }
     }
 }

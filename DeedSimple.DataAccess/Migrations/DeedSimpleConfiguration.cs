@@ -1,19 +1,17 @@
+using System.Data.Entity.Migrations;
+using DeedSimple.Domain;
+
 namespace DeedSimple.DataAccess.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<DeedSimpleContext>
+    public sealed class DeedSimpleConfiguration : DbMigrationsConfiguration<DeedSimpleContext>
     {
-        public Configuration()
+        public DeedSimpleConfiguration()
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(DeedSimple.DataAccess.DeedSimpleContext context)
+        protected override void Seed(DeedSimpleContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -27,6 +25,8 @@ namespace DeedSimple.DataAccess.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Images.AddOrUpdate(new Image{Caption = "No Image Added", FileName = "default", Id = 1});
         }
     }
 }

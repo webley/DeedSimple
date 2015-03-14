@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DeedSimple.Domain
+﻿namespace DeedSimple.Models
 {
-    public class Image
+    public class ViewImageModel
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string FileName { get; set; }
         public string Caption { get; set; }

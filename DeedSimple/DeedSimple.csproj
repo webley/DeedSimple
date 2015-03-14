@@ -186,13 +186,14 @@
     <Compile Include="Helpers\MappingExtensions.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BuyerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PropertyTypeModel.cs" />
     <Compile Include="Models\Seller\AddPropertyImageModel.cs" />
     <Compile Include="Models\Seller\AddPropertyModel.cs" />
+    <Compile Include="Models\Seller\ConfirmDeletePropertyModel.cs" />
     <Compile Include="Models\Seller\EditPropertyModel.cs" />
     <Compile Include="Models\User\SellerUserModel.cs" />
+    <Compile Include="Models\ViewImageModel.cs" />
     <Compile Include="Models\ViewPropertyDetailsModel.cs" />
     <Compile Include="Models\ViewPropertyOverviewModel.cs" />
     <Compile Include="Processor\IImageProcessor.cs" />
@@ -262,6 +263,7 @@
     <Content Include="Views\Buyer\Index.cshtml" />
     <Content Include="Views\Buyer\View.cshtml" />
     <Content Include="Views\Image\Add.cshtml" />
+    <Content Include="Views\Seller\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

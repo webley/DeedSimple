@@ -43,7 +43,7 @@ namespace DeedSimple.Models.Seller
 
         [Required]
         [Display(Name = "Upload some images")]
-        public List<long> ImageIds { get; set; }
+        public List<Image> Images { get; set; }
 
         [Required]
         [Display(Name = "Asking price")]

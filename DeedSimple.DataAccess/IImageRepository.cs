@@ -5,6 +5,6 @@ namespace DeedSimple.DataAccess
     public interface IImageRepository
     {
         Image GetImage(long imageId);
-        long AddImage(Image image);
+        long AddImage(long propertyId, Image image);
     }
 }

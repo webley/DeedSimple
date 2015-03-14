@@ -1,4 +1,5 @@
-﻿using DeedSimple.DataAccess.Exceptions;
+﻿using System.Collections.Generic;
+using DeedSimple.DataAccess.Exceptions;
 using DeedSimple.Domain;
 
 namespace DeedSimple.DataAccess
@@ -21,9 +22,20 @@ namespace DeedSimple.DataAccess
             return image;
         }
 
-        public long AddImage(Image image)
+        public long AddImage(long propertyId, Image image)
         {
-            return _context.Images.Add(image).Id;
+            var imageOut = _context.Images.Add(image);
+            var property = _context.Properties.Find(propertyId);
+
+            if (property == null)
+                throw new EntityNotFoundException(string.Format("Property with ID {0} does not exist.", propertyId));
+
+            if (property.Images == null)
+                property.Images = new List<Image>();
+
+            property.Images.Add(imageOut);
+            _context.SaveChanges();
+            return imageOut.Id;
         }
     }
 }

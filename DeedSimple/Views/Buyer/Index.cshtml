@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-4">
                 <a href='@Url.Action("View", "Buyer", new {id = item.Id})'>
-                    <img src='@Url.Action("Index", "Image", new { id = item.MainImageId })' />
+                    <img src='@Url.Action("Index", "Image", new { id = item.MainImage.Id })' height="200"/>
                 </a>
             </div>
             <div class="col-md-8">

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DeedSimple.Domain
 {
     public class Property
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public PropertyType Type { get; set; }
         public string TagLine { get; set; }
@@ -15,8 +17,9 @@ namespace DeedSimple.Domain
         public string County { get; set; }
         public string PostCode { get; set; }
 
-        public List<long> ImageIds { get; set; }
+        //public List<long> ImageIds { get; set; }
 
+        public virtual List<Image> Images { get; set; }
         public virtual List<Offer> OutstandingOffers { get; set; }
     }
 }

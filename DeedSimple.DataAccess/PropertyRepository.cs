@@ -23,8 +23,8 @@ namespace DeedSimple.DataAccess
 
             if (user != null)
             {
-                properties = _context.Properties.Where(prop => user.Properties
-                    .Select(userProp => userProp.Id)
+                var userPropertyIds = user.Properties.Select(userProp => userProp.Id);
+                properties = _context.Properties.Where(prop => userPropertyIds
                     .Contains(prop.Id))
                     .ToList();
             }
@@ -109,7 +109,7 @@ namespace DeedSimple.DataAccess
             return propertyOut.Id;
         }
 
-        public long MakeOfferForProperty(string buyerUserId, Offer offer)
+        public long PlaceOfferForProperty(string buyerUserId, Offer offer)
         {
             if (string.IsNullOrEmpty(buyerUserId))
                 throw new ArgumentNullException("buyerUserId");
@@ -126,6 +126,8 @@ namespace DeedSimple.DataAccess
 
             var offerOut = _context.Offers.Add(offer);
             buyer.Offers.Add(offerOut);
+            property.OutstandingOffers.Add(offerOut);
+
             _context.SaveChanges();
 
             return offerOut.Id;

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using DeedSimple.Domain;
 using DeedSimple.Models;
 using DeedSimple.Models.Seller;
@@ -37,7 +36,7 @@ namespace DeedSimple.Helpers
                 PostCode = propertyEntity.PostCode,
                 Description = propertyEntity.Description,
                 AskingPrice = propertyEntity.AskingPrice,
-                ImageIds = propertyEntity.ImageIds
+                Images = propertyEntity.Images
             };
 
             return model;
@@ -50,7 +49,7 @@ namespace DeedSimple.Helpers
                 TagLine = propertyEntity.TagLine,
                 Description = propertyEntity.Description,
                 AskingPrice = propertyEntity.AskingPrice,
-                MainImageId = propertyEntity.ImageIds.FirstOrDefault()
+                MainImage = propertyEntity.Images != null ? propertyEntity.Images.FirstOrDefault() : null
             };
 
             return model;
@@ -68,7 +67,7 @@ namespace DeedSimple.Helpers
                 PostCode = propertyEntity.PostCode,
                 Description = propertyEntity.Description,
                 AskingPrice = propertyEntity.AskingPrice,
-                ImageIds = propertyEntity.ImageIds
+                Images = propertyEntity.Images
             };
 
             return model;

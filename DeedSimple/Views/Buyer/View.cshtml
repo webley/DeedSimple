@@ -1,17 +1,17 @@
 ﻿@model DeedSimple.Models.ViewPropertyDetailsModel
+@{
+    ViewBag.Title = "View Property";
+}
 
 <div>
-    <h4>ViewPropertyDetailsModel</h4>
+    <h4>@Html.DisplayFor(model => model.TagLine)</h4>
     <hr/>
+    @foreach (var image in Model.Images)
+    {
+        @*<img src="@Html.Action("Index", "Image", new {id = image.Id})" height="200"/>*@
+        <p>@image.Caption</p>
+    }
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TagLine)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TagLine)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
@@ -62,11 +62,12 @@
 
     </dl>
 </div>
-@using (Html.BeginForm("PlaceOffer", "Buyer", FormMethod.Get))
+@using (Html.BeginForm("PlaceOffer", "Buyer", FormMethod.Post))
 {
+    @Html.HiddenFor(model => model.Id)
     <p>
-        Place an offer for this property: £@Html.TextBox("OfferPrice", Model.AskingPrice)
-        <input type="submit" value="Place Offer" />
+        Place an offer for this property: £ @Html.EditorFor(model => model.OfferPrice)
+        <input type="submit" value="Place Offer"/>
     </p>
 }
 <p>
