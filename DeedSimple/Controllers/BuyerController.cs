@@ -103,6 +103,7 @@ namespace DeedSimple.Controllers
                     OfferId = offer.Id,
                     PropertyId = offer.PropertyId,
                     OfferPrice = offer.Price,
+                    State = offer.State,
                     TagLine = property.TagLine,
                     MainImage = property.Images.FirstOrDefault()
                 });

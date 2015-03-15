@@ -1,40 +1,39 @@
-﻿@model IEnumerable<DeedSimple.Models.ViewBuyerOfferModel>
+﻿@using DeedSimple.Domain
+@model IEnumerable<DeedSimple.Models.ViewBuyerOfferModel>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.OfferId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PropertyId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OfferPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TagLine)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.OfferId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PropertyId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OfferPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TagLine)
-        </td>
-        <td>
-            @Html.ActionLink("Cancel Offer", "Cancel", new { offerId = item.OfferId })
-        </td>
-    </tr>
+@{
+    ViewBag.Title = "View offers you have placed";
 }
 
-</table>
+<h2>Your placed offers</h2>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <a href='@Url.Action("View", "Buyer", new {id = item.PropertyId})'>
+                <img src='@Url.Action("Index", "Image", new {id = item.MainImage.Id})' height="150" />
+            </a>
+        </div>
+        <div class="col-md-8">
+            <h4>@Html.DisplayFor(modelItem => item.TagLine)</h4>
+            <h6>@Html.DisplayFor(modelItem => item.OfferPrice)</h6>
+            @if (item.State == OfferState.Accepted)
+            {
+                <b>Accepted</b>
+            }
+            else if (item.State == OfferState.Rejected)
+            {
+                <b>Rejected</b>
+            }
+            else
+            {
+                <p>
+                    @Html.ActionLink("Cancel Offer", "Cancel", new { offerId = item.OfferId })
+                </p>
+            }
+
+        </div>
+    </div>
+    <hr />
+}

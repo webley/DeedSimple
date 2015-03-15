@@ -8,7 +8,9 @@
     <hr/>
     @foreach (var image in Model.Images)
     {
-        @*<img src="@Html.Action("Index", "Image", new {id = image.Id})" height="200"/>*@
+        <a href="@Url.Action("Index", "Image", new { id = image.Id })">
+            <img src='@Url.Action("Index", "Image", new {id = image.Id})' height="150" />
+        </a>
         <p>@image.Caption</p>
     }
     <dl class="dl-horizontal">

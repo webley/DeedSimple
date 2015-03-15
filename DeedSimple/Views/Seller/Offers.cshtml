@@ -1,6 +1,14 @@
 ﻿@using DeedSimple.Domain
 @model IEnumerable<DeedSimple.Models.ViewBuyerOfferModel>
 
+@{
+    ViewBag.Title = "View Offers";
+}
+
+<h2>
+    Offers made for your properties
+</h2>
+
 @foreach (var item in Model)
 {
     <div class="row">
