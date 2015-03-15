@@ -12,6 +12,7 @@ namespace DeedSimple.BLL.Converters
         {
             Property property = new Property
             {
+                SellerId = model.SellerId,
                 TagLine = model.TagLine,
                 Type = (PropertyType)model.Type,
                 Description = model.Description,
@@ -29,6 +30,7 @@ namespace DeedSimple.BLL.Converters
         {
             EditPropertyModel model = new EditPropertyModel(propertyEntity.Id)
             {
+                SellerId = propertyEntity.SellerId,
                 Type = (ModelPropertyType)propertyEntity.Type,
                 TagLine = propertyEntity.TagLine,
                 Road = propertyEntity.Road,
@@ -37,7 +39,6 @@ namespace DeedSimple.BLL.Converters
                 PostCode = propertyEntity.PostCode,
                 Description = propertyEntity.Description,
                 AskingPrice = propertyEntity.AskingPrice
-                //,Images = propertyEntity.Images
             };
 
             return model;

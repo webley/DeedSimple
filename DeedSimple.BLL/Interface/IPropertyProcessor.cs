@@ -13,7 +13,7 @@ namespace DeedSimple.BLL.Interface
         List<ViewOfferModel> GetOffersForBuyer(string buyerUserId);
         ViewOfferModel GetOffer(long offerId);
         List<ViewOfferModel> GetOffersForSeller(string sellerUserId);
-        long AddPropertyForUser(string userId, AddPropertyModel property);
+        long AddPropertyForUser(AddPropertyModel property);
         long PlaceOfferForProperty(AddOfferModel offer);
         bool PropertyCanBeEditedByUser(long propertyId, string userId);
 

@@ -7,6 +7,8 @@ namespace DeedSimple.ViewModel.Property
 {
     public class AddPropertyModel
     {
+        public string SellerId { get; set; }
+
         [DataType(DataType.Text)]
         [Display(Name = "Property Type")]
         public PropertyType Type { get; set; }

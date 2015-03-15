@@ -31,7 +31,11 @@ namespace DeedSimple.BLL.Implementation
 
         public ViewSellerUserModel GetSellerUser(string sellerId)
         {
-            return _userRepository.GetSellerUser(sellerId).ToViewSellerUserModel();
+            var properties = _propertyRepository
+                .GetPropertiesBySellerId(sellerId)
+                .Select(prop => prop.ToViewPropertyDetailsModel());
+
+            return _userRepository.GetSellerUser(sellerId).ToViewSellerUserModel(properties.ToList());
         }
 
         public ViewBuyerUserModel GetBuyerUser(string buyerId)

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using DeedSimple.ViewModel.Enum;
-using DeedSimple.ViewModel.Image;
 
 namespace DeedSimple.ViewModel.Property
 {
@@ -13,6 +11,7 @@ namespace DeedSimple.ViewModel.Property
         }
 
         public long PropertyId { get; private set; }
+        public string SellerId { get; set; }
 
         [Required]
         [Display(Name = "Property type")]
@@ -41,10 +40,6 @@ namespace DeedSimple.ViewModel.Property
         [Required]
         [Display(Name = "Enter a description")]
         public string Description { get; set; }
-
-        //[Required]
-        //[Display(Name = "Upload some images")]
-        //public List<AddPropertyImageModel> Images { get; set; }
 
         [Required]
         [Display(Name = "Asking price")]

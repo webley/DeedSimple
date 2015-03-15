@@ -49,11 +49,11 @@ namespace DeedSimple.Controllers
 
         // POST: Seller/Add
         [HttpPost]
-        public async Task<ActionResult> Add(AddPropertyModel model)
+        public ActionResult Add(AddPropertyModel model)
         {
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            model.SellerId = User.Identity.GetUserId();
 
-            var propertyId = _propertyProcessor.AddPropertyForUser(user.Id, model);
+            var propertyId = _propertyProcessor.AddPropertyForUser(model);
             return RedirectToAction("Edit", new { propertyId });
         }
 

@@ -7,6 +7,8 @@ namespace DeedSimple.Domain
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+        public string SellerId { get; set; }
+
         public PropertyType Type { get; set; }
         public string TagLine { get; set; }
         public string Description { get; set; }
@@ -16,8 +18,6 @@ namespace DeedSimple.Domain
         public string Town { get; set; }
         public string County { get; set; }
         public string PostCode { get; set; }
-
-        //public List<long> ImageIds { get; set; }
 
         public virtual List<Image> Images { get; set; }
         public virtual List<Offer> OutstandingOffers { get; set; }

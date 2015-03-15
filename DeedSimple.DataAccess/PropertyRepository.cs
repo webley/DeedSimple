@@ -22,7 +22,7 @@ namespace DeedSimple.DataAccess
             if (user == null)
                 throw new EntityNotFoundException(string.Format("Seller user with ID {0} does not exist.", sellerId));
 
-            return user.Properties;
+            return _context.Properties.Where(prop => prop.SellerId.Equals(sellerId)).ToList();
         }
 
         public Offer GetOffer(long offerId)
@@ -108,14 +108,13 @@ namespace DeedSimple.DataAccess
             return properties.ToList();
         }
 
-        public long AddPropertyForUser(string sellerId, Property property)
+        public long AddPropertyForUser(Property property)
         {
-            var user = _context.SellerUsers.Find(sellerId);
+            var user = _context.SellerUsers.Find(property.SellerId);
 
             if (user == null)
-                throw new EntityNotFoundException(string.Format("Seller user {0} does not exist.", sellerId));
+                throw new EntityNotFoundException(string.Format("Seller user {0} does not exist.", property.SellerId));
 
-            user.Properties.Add(property);
             var propertyOut = _context.Properties.Add(property);
             _context.SaveChanges();
 
@@ -124,10 +123,10 @@ namespace DeedSimple.DataAccess
 
         public long PlaceOfferForProperty(Offer offer)
         {
-            if (string.IsNullOrEmpty(offer.BuyerId))
-                throw new ArgumentNullException("buyerUserId");
             if (offer == null)
                 throw new ArgumentNullException("offer");
+            if (string.IsNullOrEmpty(offer.BuyerId))
+                throw new ArgumentException("Offer must have a buyer user ID set.");
 
             var buyer = _context.BuyerUsers.Find(offer.BuyerId);
             if (buyer == null)
@@ -147,13 +146,8 @@ namespace DeedSimple.DataAccess
 
         public bool PropertyCanBeEditedByUser(long propertyId, string userId)
         {
-            var user = _context.SellerUsers.Find(userId);
-            if (user != null)
-            {
-                return user.Properties.Select(prop => prop.Id).Contains(propertyId);
-            }
-
-            return false;
+            var property = _context.Properties.Find(propertyId);
+            return property != null && property.SellerId.Equals(userId);
         }
 
         public void CancelOffer(long offerId)

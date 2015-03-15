@@ -2,6 +2,7 @@
 using System.Linq;
 using DeedSimple.Domain;
 using DeedSimple.ViewModel.Offer;
+using DeedSimple.ViewModel.Property;
 using DeedSimple.ViewModel.User;
 
 namespace DeedSimple.BLL.Converters
@@ -39,12 +40,12 @@ namespace DeedSimple.BLL.Converters
             return model;
         }
 
-        public static ViewSellerUserModel ToViewSellerUserModel(this SellerUser sellerEntity)
+        public static ViewSellerUserModel ToViewSellerUserModel(this SellerUser sellerEntity, List<ViewPropertyDetailsModel> properties)
         {
             var model = new ViewSellerUserModel
             {
                 Id = sellerEntity.Id,
-                Properties = sellerEntity.Properties.Select(prop => prop.ToViewPropertyDetailsModel()).ToList()
+                Properties = properties
             };
 
             return model;

@@ -70,9 +70,9 @@ namespace DeedSimple.BLL.Implementation
                 .Select(prop => prop.ToViewPropertyOverviewModel());
         }
 
-        public long AddPropertyForUser(string userId, AddPropertyModel property)
+        public long AddPropertyForUser(AddPropertyModel property)
         {
-            return _propertyRepository.AddPropertyForUser(userId, property.ToProperty());
+            return _propertyRepository.AddPropertyForUser(property.ToProperty());
         }
 
         public long PlaceOfferForProperty(AddOfferModel offer)
