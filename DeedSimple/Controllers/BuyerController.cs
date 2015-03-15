@@ -64,7 +64,7 @@ namespace DeedSimple.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            int pageSize = 5;
+            int pageSize = 3;
             int pageNumber = (page ?? 1);
             var properties = _propertyProcessor.GetPropertiesFiltered(propertySortOrder, searchString);
             var pagedListModel = properties.ToPagedList(pageNumber, pageSize);

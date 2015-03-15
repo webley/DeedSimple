@@ -53,6 +53,7 @@ namespace DeedSimple.BLL.Converters
                 if (firstImage != null)
                     imageModel = firstImage.ToViewImageModel();
             }
+            imageModel = imageModel ?? Image.GetDefault().ToViewImageModel();
 
             var model = new ViewPropertyOverviewModel(propertyEntity.Id)
             {
