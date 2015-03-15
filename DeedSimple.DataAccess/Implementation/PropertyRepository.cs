@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using DeedSimple.DataAccess.Exceptions;
+using DeedSimple.DataAccess.Interface;
 using DeedSimple.Domain;
 
-namespace DeedSimple.DataAccess
+namespace DeedSimple.DataAccess.Implementation
 {
     public class PropertyRepository : IPropertyRepository, IDisposable
     {

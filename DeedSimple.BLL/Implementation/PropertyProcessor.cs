@@ -3,6 +3,7 @@ using System.Linq;
 using DeedSimple.BLL.Converters;
 using DeedSimple.BLL.Interface;
 using DeedSimple.DataAccess;
+using DeedSimple.DataAccess.Interface;
 using DeedSimple.ViewModel.Offer;
 using DeedSimple.ViewModel.Property;
 using DeedSimple.ViewModel.Enum;

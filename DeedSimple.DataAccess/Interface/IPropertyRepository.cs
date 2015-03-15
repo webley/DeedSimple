@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DeedSimple.Domain;
 
-namespace DeedSimple.DataAccess
+namespace DeedSimple.DataAccess.Interface
 {
     public interface IPropertyRepository
     {

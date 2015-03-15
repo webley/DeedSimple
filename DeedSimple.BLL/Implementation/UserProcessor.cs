@@ -2,6 +2,7 @@
 using DeedSimple.BLL.Converters;
 using DeedSimple.BLL.Interface;
 using DeedSimple.DataAccess;
+using DeedSimple.DataAccess.Interface;
 using DeedSimple.ViewModel.User;
 
 namespace DeedSimple.BLL.Implementation

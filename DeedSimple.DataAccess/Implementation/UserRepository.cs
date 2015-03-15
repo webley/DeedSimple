@@ -1,7 +1,8 @@
 ﻿using System;
+using DeedSimple.DataAccess.Interface;
 using DeedSimple.Domain;
 
-namespace DeedSimple.DataAccess
+namespace DeedSimple.DataAccess.Implementation
 {
     public class UserRepository : IUserRepository, IDisposable
     {

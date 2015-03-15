@@ -2,6 +2,8 @@ using System.Web.Mvc;
 using DeedSimple.BLL.Implementation;
 using DeedSimple.BLL.Interface;
 using DeedSimple.DataAccess;
+using DeedSimple.DataAccess.Implementation;
+using DeedSimple.DataAccess.Interface;
 using Microsoft.Practices.Unity;
 using Unity.Mvc5;
 
