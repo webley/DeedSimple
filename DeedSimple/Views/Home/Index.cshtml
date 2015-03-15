@@ -5,7 +5,9 @@
 <div class="jumbotron">
     <h1>Deed Simple</h1>
     <p class="lead">Welcome to Deed Simple.  We are an online provider of estate agency and property searching services, with the aim of saving you time and money.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p>
+        @Html.ActionLink("Log in or register now »", "Login", "Account", null, new { @class = "btn btn-primary btn-lg" })
+    </p>
 </div>
 
 <div class="row">

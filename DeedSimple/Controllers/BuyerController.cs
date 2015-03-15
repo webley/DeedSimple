@@ -113,7 +113,8 @@ namespace DeedSimple.Controllers
 
         public ActionResult Cancel(long offerId)
         {
-            throw new NotImplementedException();
+            _propertyProcessor.CancelOffer(offerId);
+            return RedirectToAction("Offers");
         }
     }
 }

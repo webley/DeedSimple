@@ -16,6 +16,7 @@ namespace DeedSimple.Processor
         long PlaceOfferForProperty(string userId, Offer offer);
         bool PropertyCanBeEditedByUser(long propertyId, string userId);
 
+        void CancelOffer(long offerId);
         void AcceptOffer(long offerId);
         void RejectOffer(long offerId);
     }

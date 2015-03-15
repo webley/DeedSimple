@@ -14,9 +14,6 @@ namespace DeedSimple
     {
         protected void Application_Start()
         {
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DeedSimpleContext>());
-            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
-
             Database.SetInitializer(new DeedSimpleDatabaseInitializer());
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
 

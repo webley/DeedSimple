@@ -170,7 +170,7 @@ namespace DeedSimple.DataAccess
             return false;
         }
 
-        public void DeleteOffer(long offerId)
+        public void CancelOffer(long offerId)
         {
             var offer = _context.Offers.Find(offerId);
             if (offer != null)

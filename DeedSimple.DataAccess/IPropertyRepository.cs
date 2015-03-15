@@ -15,7 +15,7 @@ namespace DeedSimple.DataAccess
         long PlaceOfferForProperty(string buyerUserId, Offer offer);
         bool PropertyCanBeEditedByUser(long propertyId, string userId);
 
-        void DeleteOffer(long offerId);
+        void CancelOffer(long offerId);
         void AcceptOffer(long offerId);
         void RejectOffer(long offerId);
     }

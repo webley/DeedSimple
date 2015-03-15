@@ -11,6 +11,8 @@ namespace DeedSimple.Models
         [DataType(DataType.Currency)]
         public decimal OfferPrice { get; set; }
 
+        public OfferState State { get; set; }
+
         [DataType(DataType.Text)]
         public string TagLine { get; set; }
 

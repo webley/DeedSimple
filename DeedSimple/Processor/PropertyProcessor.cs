@@ -60,6 +60,11 @@ namespace DeedSimple.Processor
             return _propertyRepository.PropertyCanBeEditedByUser(propertyId, userId);
         }
 
+        public void CancelOffer(long offerId)
+        {
+            _propertyRepository.CancelOffer(offerId);
+        }
+
         public void AcceptOffer(long offerId)
         {
             _propertyRepository.AcceptOffer(offerId);
