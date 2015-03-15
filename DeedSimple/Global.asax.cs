@@ -14,11 +14,11 @@ namespace DeedSimple
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new DeedSimpleDatabaseInitializer());
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
+            //Database.SetInitializer(new DeedSimpleDatabaseInitializer());
+            //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
 
-            //Database.SetInitializer(new DropCreateDatabaseAlways<DeedSimpleContext>());
-            //Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<DeedSimpleContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<ApplicationDbContext>());
             
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 

@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using DeedSimple.ViewModel.Enum;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using DeedSimple.Domain;
 
 namespace DeedSimple.Models
 {

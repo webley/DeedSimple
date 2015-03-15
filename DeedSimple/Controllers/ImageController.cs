@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using DeedSimple.Domain;
-using DeedSimple.Models.Seller;
-using DeedSimple.Processor;
+using DeedSimple.BLL.Interface;
+using DeedSimple.ViewModel.Image;
 
 namespace DeedSimple.Controllers
 {
@@ -14,7 +13,6 @@ namespace DeedSimple.Controllers
         private readonly IImageProcessor _imageProcessor;
         private readonly HashSet<string> _validImageTypes;
         private readonly string _fileStorePath;
-        private readonly string _fileStoreUri;
 
         public ImageController(IImageProcessor imageProcessor)
         {
@@ -28,8 +26,7 @@ namespace DeedSimple.Controllers
                 "image/png"
             };
 
-            _fileStoreUri = "~/App_Data/UploadedImages";
-            _fileStorePath = HostingEnvironment.MapPath(_fileStoreUri);
+            _fileStorePath = HostingEnvironment.MapPath("~/App_Data/UploadedImages");
         }
 
         // GET: Image
@@ -75,14 +72,7 @@ namespace DeedSimple.Controllers
                         Directory.CreateDirectory(_fileStorePath);
 
                     model.Image.SaveAs(imagePath);
-                    var image = new Image
-                    {
-                        Caption = model.Caption,
-                        FileName = fileGuid,
-                        ContentType = model.Image.ContentType
-                    };
-
-                    var imageId = _imageProcessor.AddImage(model.PropertyId, image);
+                    var imageId = _imageProcessor.AddImage(model, fileGuid, model.Image.ContentType);
                 }
 
                 return RedirectToAction("Edit", "Seller", new {propertyId = model.PropertyId});
@@ -95,12 +85,6 @@ namespace DeedSimple.Controllers
         private string GetImageFilePath(string fileName)
         {
             return Path.Combine(_fileStorePath, fileName);
-        }
-
-        [NonAction]
-        private string GetImageUri(string fileName)
-        {
-            return string.Format("{0}/{1}", _fileStoreUri, fileName);
         }
     }
 }

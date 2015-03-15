@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3D2DC035-140F-4953-A87B-6683B78E0D18}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeedSimple.BLL</RootNamespace>
+    <AssemblyName>DeedSimple.BLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Converters\ImageConverterExtensions.cs" />
+    <Compile Include="Converters\OfferConverterExtensions.cs" />
+    <Compile Include="Converters\PropertyConverterExtensions.cs" />
+    <Compile Include="Converters\UserConverterExtensions.cs" />
+    <Compile Include="Interface\IImageProcessor.cs" />
+    <Compile Include="Implementation\ImageProcessor.cs" />
+    <Compile Include="Interface\IPropertyProcessor.cs" />
+    <Compile Include="Interface\IUserProcessor.cs" />
+    <Compile Include="Implementation\PropertyProcessor.cs" />
+    <Compile Include="Implementation\UserProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeedSimple.DataAccess\DeedSimple.DataAccess.csproj">
+      <Project>{affeae1f-f8c1-4953-8c14-0c7d9ec086e3}</Project>
+      <Name>DeedSimple.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeedSimple.Domain\DeedSimple.Domain.csproj">
+      <Project>{85b2415e-9bd6-4854-926f-912bc47f4b28}</Project>
+      <Name>DeedSimple.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DeedSimple.ViewModel\DeedSimple.ViewModel.csproj">
+      <Project>{806649ea-35c9-43ba-be63-60034e9a7ea7}</Project>
+      <Name>DeedSimple.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

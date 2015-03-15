@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
-using DeedSimple.Domain;
-using DeedSimple.Helpers;
-using DeedSimple.Models;
-using DeedSimple.Processor;
+using DeedSimple.BLL.Interface;
+using DeedSimple.ViewModel.Enum;
+using DeedSimple.ViewModel.Offer;
+using DeedSimple.ViewModel.Property;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PagedList;
@@ -71,7 +67,7 @@ namespace DeedSimple.Controllers
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             var properties = _propertyProcessor.GetPropertiesFiltered(propertySortOrder, searchString);
-            var pagedListModel = properties.Select(p => p.MapToViewPropertyOverviewModel()).ToPagedList(pageNumber, pageSize);
+            var pagedListModel = properties.ToPagedList(pageNumber, pageSize);
             return View(pagedListModel);
         }
 
@@ -79,14 +75,20 @@ namespace DeedSimple.Controllers
         public ActionResult View(long id)
         {
             var property = _propertyProcessor.GetProperty(id);
-            return View(property.MapToViewPropertyDetailsModel());
+            return View(property);
         }
 
         [HttpPost]
         public ActionResult PlaceOffer(ViewPropertyDetailsModel model)
         {
-            Offer offer = new Offer{Price = model.OfferPrice, PropertyId = model.Id};
-            var offerId = _propertyProcessor.PlaceOfferForProperty(User.Identity.GetUserId(), offer);
+            var offer = new AddOfferModel
+            {
+                PropertyId = model.Id,
+                OfferPrice = model.OfferPrice,
+                BuyerUserId = User.Identity.GetUserId()
+            };
+
+            var offerId = _propertyProcessor.PlaceOfferForProperty(offer);
             return RedirectToAction("Offers");
         }
 
@@ -94,22 +96,22 @@ namespace DeedSimple.Controllers
         {
             var offers = _propertyProcessor.GetOffersForBuyer(User.Identity.GetUserId());
 
-            var model = new List<ViewBuyerOfferModel>();
-            foreach (var offer in offers)
-            {
-                var property = _propertyProcessor.GetProperty(offer.PropertyId);
-                model.Add(new ViewBuyerOfferModel
-                {
-                    OfferId = offer.Id,
-                    PropertyId = offer.PropertyId,
-                    OfferPrice = offer.Price,
-                    State = offer.State,
-                    TagLine = property.TagLine,
-                    MainImage = property.Images.FirstOrDefault()
-                });
-            }
+            //var model = new List<ViewOfferModel>();
+            //foreach (var offer in offers)
+            //{
+            //    var property = _propertyProcessor.GetProperty(offer.PropertyId);
+            //    model.Add(new ViewOfferModel
+            //    {
+            //        OfferId = offer.OfferId,
+            //        PropertyId = offer.PropertyId,
+            //        OfferPrice = offer.OfferPrice,
+            //        State = offer.State,
+            //        TagLine = property.TagLine,
+            //        MainImage = property.Images.FirstOrDefault()
+            //    });
+            //}
 
-            return View(model);
+            return View(offers);
         }
 
         public ActionResult Cancel(long offerId)

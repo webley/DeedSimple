@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DeedSimple.Domain;
+using DeedSimple.BLL.Interface;
+using DeedSimple.Models;
+using DeedSimple.ViewModel.Enum;
+using DeedSimple.ViewModel.User;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Owin;
-using DeedSimple.Models;
-using DeedSimple.Processor;
 
 namespace DeedSimple.Controllers
 {
@@ -99,13 +94,13 @@ namespace DeedSimple.Controllers
                     switch (user.UserType)
                     {
                         case UserType.Buyer:
-                            _userProcessor.AddBuyerUser(new BuyerUser
+                            _userProcessor.AddBuyerUser(new AddUserModel
                             {
                                 Id = user.Id
                             });
                             return RedirectToAction("Index", "Buyer");
                         case UserType.Seller:
-                            _userProcessor.AddSellerUser(new SellerUser
+                            _userProcessor.AddSellerUser(new AddUserModel
                             {
                                 Id = user.Id
                             });

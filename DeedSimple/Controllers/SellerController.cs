@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using DeedSimple.Domain;
-using DeedSimple.Helpers;
+using DeedSimple.BLL.Interface;
+using DeedSimple.Converters;
 using DeedSimple.Models;
-using DeedSimple.Models.Seller;
-using DeedSimple.Models.User;
-using DeedSimple.Processor;
+using DeedSimple.ViewModel.Offer;
+using DeedSimple.ViewModel.Property;
+using DeedSimple.ViewModel.User;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -39,7 +36,7 @@ namespace DeedSimple.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var properties = _propertyProcessor.GetPropertiesForUser(user.Id);
-            var model = new SellerUserModel { Name = user.UserName, Properties = properties ?? new List<Property>() };
+            var model = new ViewSellerUserModel { Id = user.UserName, Properties = properties };
             return View(model);
         }
 
@@ -56,8 +53,8 @@ namespace DeedSimple.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            var propertyId = _propertyProcessor.AddPropertyForUser(user.Id, model.MapToProperty());
-            return RedirectToAction("Edit", new RouteValueDictionary { { "propertyId", propertyId } });
+            var propertyId = _propertyProcessor.AddPropertyForUser(user.Id, model);
+            return RedirectToAction("Edit", new { propertyId });
         }
 
         public async Task<ActionResult> Edit(long propertyId)
@@ -68,7 +65,7 @@ namespace DeedSimple.Controllers
 
             var property = _propertyProcessor.GetProperty(propertyId);
 
-            var model = property.MapToEditPropertyModel();
+            var model = property.ToEditPropertyModel();
             return View(model);
         }
 
@@ -80,7 +77,7 @@ namespace DeedSimple.Controllers
         public ActionResult Accept(long offerId)
         {
             var offer = _propertyProcessor.GetOffer(offerId);
-            return View(new ConfirmAcceptOfferModel { OfferId = offer.Id, OfferPrice = offer.Price});
+            return View(new ConfirmAcceptOfferModel { OfferId = offer.OfferId, OfferPrice = offer.OfferPrice});
         }
 
         public ActionResult ConfirmAccept(long offerId)
@@ -98,7 +95,7 @@ namespace DeedSimple.Controllers
         public ActionResult Reject(long offerId)
         {
             var offer = _propertyProcessor.GetOffer(offerId);
-            return View(new ConfirmRejectOfferModel { OfferId = offer.Id, OfferPrice = offer.Price });
+            return View(new ConfirmRejectOfferModel { OfferId = offer.OfferId, OfferPrice = offer.OfferPrice });
         }
 
         public ActionResult ConfirmReject(long offerId)
@@ -116,22 +113,22 @@ namespace DeedSimple.Controllers
         public ActionResult Offers()
         {
             var offers = _propertyProcessor.GetOffersForSeller(User.Identity.GetUserId());
-            var model = new List<ViewBuyerOfferModel>();
-            foreach (var offer in offers)
-            {
-                var property = _propertyProcessor.GetProperty(offer.PropertyId);
-                model.Add(new ViewBuyerOfferModel
-                {
-                    OfferId = offer.Id,
-                    PropertyId = offer.PropertyId,
-                    OfferPrice = offer.Price,
-                    State = offer.State,
-                    TagLine = property.TagLine,
-                    MainImage = property.Images.FirstOrDefault()
-                });
-            }
+            //var model = new List<ViewOfferModel>();
+            //foreach (var offer in offers)
+            //{
+            //    var property = _propertyProcessor.GetProperty(offer.PropertyId);
+            //    model.Add(new ViewOfferModel
+            //    {
+            //        OfferId = offer.OfferId,
+            //        PropertyId = offer.PropertyId,
+            //        OfferPrice = offer.OfferPrice,
+            //        State = offer.State,
+            //        TagLine = property.TagLine,
+            //        MainImage = property.Images.FirstOrDefault()
+            //    });
+            //}
 
-            return View(model);
+            return View(offers);
         }
     }
 }

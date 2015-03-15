@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using DeedSimple.Domain;
+using DeedSimple.ViewModel.Enum;
 
 namespace DeedSimple.Models
 {
