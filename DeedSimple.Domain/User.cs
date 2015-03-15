@@ -1,7 +1,8 @@
 ﻿namespace DeedSimple.Domain
 {
-    public class BuyerUser
+    public class User
     {
         public string Id { get; set; }
+        public UserType Type { get; set; }
     }
 }

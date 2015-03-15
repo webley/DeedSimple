@@ -12,26 +12,15 @@ namespace DeedSimple.DataAccess
             _context = new DeedSimpleContext();
         }
 
-        public void AddSellerUser(SellerUser seller)
+        public void AddUser(User user)
         {
-            _context.SellerUsers.Add(seller);
+            _context.Users.Add(user);
             _context.SaveChanges();
         }
 
-        public void AddBuyerUser(BuyerUser buyer)
+        public User GetUser(string userId)
         {
-            _context.BuyerUsers.Add(buyer);
-            _context.SaveChanges();
-        }
-
-        public SellerUser GetSellerUser(string sellerId)
-        {
-            return _context.SellerUsers.Find(sellerId);
-        }
-
-        public BuyerUser GetBuyerUser(string buyerId)
-        {
-            return _context.BuyerUsers.Find(buyerId);
+            return _context.Users.Find(userId);
         }
 
         public void Dispose()

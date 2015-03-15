@@ -103,15 +103,17 @@ namespace DeedSimple.Controllers
                     switch (user.UserType)
                     {
                         case UserType.Buyer:
-                            _userProcessor.AddBuyerUser(new AddUserModel
+                            _userProcessor.AddUser(new AddUserModel
                             {
-                                Id = user.Id
+                                Id = user.Id,
+                                Type = UserType.Buyer
                             });
                             return RedirectToAction("Index", "Buyer");
                         case UserType.Seller:
-                            _userProcessor.AddSellerUser(new AddUserModel
+                            _userProcessor.AddUser(new AddUserModel
                             {
-                                Id = user.Id
+                                Id = user.Id,
+                                Type = UserType.Seller
                             });
                             return RedirectToAction("Index", "Seller");
                     }

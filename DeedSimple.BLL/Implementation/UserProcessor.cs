@@ -19,14 +19,9 @@ namespace DeedSimple.BLL.Implementation
             _propertyRepository = propertyRepository;
         }
 
-        public void AddSellerUser(AddUserModel seller)
+        public void AddUser(AddUserModel seller)
         {
-            _userRepository.AddSellerUser(seller.ToSellerUser());
-        }
-
-        public void AddBuyerUser(AddUserModel buyer)
-        {
-            _userRepository.AddBuyerUser(buyer.ToBuyerUser());
+            _userRepository.AddUser(seller.ToUser());
         }
 
         public ViewSellerUserModel GetSellerUser(string sellerId)
@@ -35,7 +30,7 @@ namespace DeedSimple.BLL.Implementation
                 .GetPropertiesBySellerId(sellerId)
                 .Select(prop => prop.ToViewPropertyDetailsModel());
 
-            return _userRepository.GetSellerUser(sellerId).ToViewSellerUserModel(properties.ToList());
+            return _userRepository.GetUser(sellerId).ToViewSellerUserModel(properties.ToList());
         }
 
         public ViewBuyerUserModel GetBuyerUser(string buyerId)
@@ -48,7 +43,7 @@ namespace DeedSimple.BLL.Implementation
                     return offer.ToViewOfferModel(property.Images.FirstOrDefault(), property.TagLine);
                 });
 
-            return _userRepository.GetBuyerUser(buyerId).ToViewBuyerUserModel(offers.ToList());
+            return _userRepository.GetUser(buyerId).ToViewBuyerUserModel(offers.ToList());
         }
     }
 }

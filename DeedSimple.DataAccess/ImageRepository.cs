@@ -17,7 +17,7 @@ namespace DeedSimple.DataAccess
         {
             var image = _context.Images.Find(imageId);
             if (image == null)
-                throw new EntityNotFoundException(string.Format("Image with ID {0} does not exist.", imageId));
+                return Image.GetDefault();
 
             return image;
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using DeedSimple.Domain;
 using DeedSimple.ViewModel.Offer;
 using DeedSimple.ViewModel.Property;
@@ -9,27 +8,18 @@ namespace DeedSimple.BLL.Converters
 {
     public static class UserConverterExtensions
     {
-        public static BuyerUser ToBuyerUser(this AddUserModel model)
+        public static User ToUser(this AddUserModel model)
         {
-            var user = new BuyerUser
+            var user = new User
             {
-                Id = model.Id
+                Id = model.Id,
+                Type = (UserType)model.Type
             };
 
             return user;
         }
 
-        public static SellerUser ToSellerUser(this AddUserModel model)
-        {
-            var user = new SellerUser
-            {
-                Id = model.Id
-            };
-
-            return user;
-        }
-
-        public static ViewBuyerUserModel ToViewBuyerUserModel(this BuyerUser buyerEntity, List<ViewOfferModel> offers)
+        public static ViewBuyerUserModel ToViewBuyerUserModel(this User buyerEntity, List<ViewOfferModel> offers)
         {
             var model = new ViewBuyerUserModel
             {
@@ -40,7 +30,7 @@ namespace DeedSimple.BLL.Converters
             return model;
         }
 
-        public static ViewSellerUserModel ToViewSellerUserModel(this SellerUser sellerEntity, List<ViewPropertyDetailsModel> properties)
+        public static ViewSellerUserModel ToViewSellerUserModel(this User sellerEntity, List<ViewPropertyDetailsModel> properties)
         {
             var model = new ViewSellerUserModel
             {

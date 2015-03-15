@@ -17,10 +17,10 @@ namespace DeedSimple.DataAccess
 
         public List<Property> GetPropertiesBySellerId(string sellerId)
         {
-            var user = _context.SellerUsers.Find(sellerId);
-
-            if (user == null)
-                throw new EntityNotFoundException(string.Format("Seller user with ID {0} does not exist.", sellerId));
+            //var user = _context.Users.Find(sellerId);
+            //
+            //if (user == null)
+            //    throw new EntityNotFoundException(string.Format("Seller user with ID {0} does not exist.", sellerId));
 
             return _context.Properties.Where(prop => prop.SellerId.Equals(sellerId)).ToList();
         }
@@ -37,10 +37,10 @@ namespace DeedSimple.DataAccess
 
         public List<Offer> GetOffersByBuyerId(string buyerId)
         {
-            var user = _context.BuyerUsers.Find(buyerId);
-
-            if (user == null)
-                throw new EntityNotFoundException(string.Format("Buyer user with ID {0} does not exist.", buyerId));
+            //var user = _context.Users.Find(buyerId);
+            //
+            //if (user == null)
+            //    throw new EntityNotFoundException(string.Format("Buyer user with ID {0} does not exist.", buyerId));
 
             return _context.Offers.Where(offer => offer.BuyerId.Equals(buyerId)).ToList();
         }
@@ -110,9 +110,9 @@ namespace DeedSimple.DataAccess
 
         public long AddPropertyForUser(Property property)
         {
-            var user = _context.SellerUsers.Find(property.SellerId);
+            var user = _context.Users.Find(property.SellerId);
 
-            if (user == null)
+            if (user == null || user.Type != UserType.Seller)
                 throw new EntityNotFoundException(string.Format("Seller user {0} does not exist.", property.SellerId));
 
             var propertyOut = _context.Properties.Add(property);
@@ -128,8 +128,8 @@ namespace DeedSimple.DataAccess
             if (string.IsNullOrEmpty(offer.BuyerId))
                 throw new ArgumentException("Offer must have a buyer user ID set.");
 
-            var buyer = _context.BuyerUsers.Find(offer.BuyerId);
-            if (buyer == null)
+            var buyer = _context.Users.Find(offer.BuyerId);
+            if (buyer == null || buyer.Type != UserType.Buyer)
                 throw new EntityNotFoundException(string.Format("Buyer with ID {0} does not exist.", offer.BuyerId));
 
             var property = _context.Properties.Find(offer.PropertyId);

@@ -9,16 +9,19 @@
 <p>
     @Html.ActionLink("Add New Property", "Add")
 </p>
-<table class="table">
-@foreach (var item in Model.Properties) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TagLine)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { propertyId=item.Id }) |
-            @Html.ActionLink("Remove", "Delete", new { propertyId = item.Id })
-        </td>
-    </tr>
+
+@foreach (var item in Model.Properties)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <a href='@Url.Action("Edit", "Seller", new { propertyId = item.Id })'>
+                <img src='@Url.Action("Index", "Image", new {id = item.Images != null && item.Images.Count > 0 ? item.Images[0].Id : 0})' height="150" />
+            </a>
+        </div>
+        <div class="col-md-8">
+            <h4>@Html.DisplayFor(modelItem => item.TagLine)</h4>
+            <h6>@Html.DisplayFor(modelItem => item.Road)</h6>
+        </div>
+    </div>
+    <hr />
 }
-</table>
