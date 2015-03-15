@@ -24,13 +24,14 @@
                     @if (User.IsInRole("Buyer"))
                     {
                         <li>@Html.ActionLink("Browse Property", "Index", "Buyer")</li>
+                        <li>@Html.ActionLink("Placed Offers", "Offers", "Buyer")</li>
                     }
                     else if (User.IsInRole("Seller"))
                     {
                         <li>@Html.ActionLink("Manage Property", "Index", "Seller")</li>
+                        <li>@Html.ActionLink("View Offers", "Offers", "Seller")</li>
                     }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

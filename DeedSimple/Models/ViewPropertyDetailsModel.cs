@@ -16,7 +16,7 @@ namespace DeedSimple.Models
             Id = id;
         }
 
-        public long Id { get; private set; }
+        public long Id { get; set; }
 
         [DataType(DataType.Text)]
         [Display(Name = "Property Type")]

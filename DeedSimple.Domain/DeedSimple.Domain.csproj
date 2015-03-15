@@ -43,6 +43,7 @@
     <Compile Include="BuyerUser.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Offer.cs" />
+    <Compile Include="OfferState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
     <Compile Include="PropertySortOrder.cs" />

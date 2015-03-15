@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DeedSimple.DataAccess.Exceptions;
 using DeedSimple.Domain;
-using PagedList;
 
 namespace DeedSimple.DataAccess
 {
@@ -18,18 +17,45 @@ namespace DeedSimple.DataAccess
 
         public List<Property> GetPropertiesBySellerId(string sellerId)
         {
-            List<Property> properties = null;
-            var user = _context.SellerUsers.FirstOrDefault(u => u.Id == sellerId);
+            var user = _context.SellerUsers.Find(sellerId);
 
-            if (user != null)
-            {
-                var userPropertyIds = user.Properties.Select(userProp => userProp.Id);
-                properties = _context.Properties.Where(prop => userPropertyIds
-                    .Contains(prop.Id))
-                    .ToList();
-            }
+            if (user == null)
+                throw new EntityNotFoundException(string.Format("Seller user with ID {0} does not exist.", sellerId));
 
-            return properties;
+            return user.Properties;
+
+
+            //List<Property> properties = null;
+            //if (user != null)
+            //{
+            //    // TODO: What the hell was I doing here?
+            //    var userPropertyIds = user.Properties.Select(userProp => userProp.Id);
+            //    properties = _context.Properties.Where(prop => userPropertyIds
+            //        .Contains(prop.Id))
+            //        .ToList();
+            //}
+            //
+            //return properties;
+        }
+
+        public Offer GetOffer(long offerId)
+        {
+            var offer = _context.Offers.Find(offerId);
+
+            if (offer == null)
+                throw new EntityNotFoundException(string.Format("Offer with ID {0} does not exist.", offerId));
+
+            return offer;
+        }
+
+        public List<Offer> GetOffersByBuyerId(string buyerId)
+        {
+            var user = _context.BuyerUsers.Find(buyerId);
+
+            if (user == null)
+                throw new EntityNotFoundException(string.Format("Buyer user with ID {0} does not exist.", buyerId));
+
+            return user.Offers;
         }
 
         /// <summary>
@@ -142,6 +168,38 @@ namespace DeedSimple.DataAccess
             }
 
             return false;
+        }
+
+        public void DeleteOffer(long offerId)
+        {
+            var offer = _context.Offers.Find(offerId);
+            if (offer != null)
+            {
+                _context.Offers.Remove(offer);
+                _context.SaveChanges();
+            }
+        }
+
+        public void AcceptOffer(long offerId)
+        {
+            var offer = _context.Offers.Find(offerId);
+
+            if (offer == null)
+                throw new EntityNotFoundException(string.Format("Offer with ID {0} does not exist.", offerId));
+
+            offer.State = OfferState.Accepted;
+            _context.SaveChanges();
+        }
+
+        public void RejectOffer(long offerId)
+        {
+            var offer = _context.Offers.Find(offerId);
+
+            if (offer == null)
+                throw new EntityNotFoundException(string.Format("Offer with ID {0} does not exist.", offerId));
+
+            offer.State = OfferState.Rejected;
+            _context.SaveChanges();
         }
 
         public void Dispose()

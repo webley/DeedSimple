@@ -1,0 +1,9 @@
+﻿@model DeedSimple.Models.ConfirmRejectOfferModel
+
+<h2>Confirm offer rejection</h2>
+
+<h4>Are you sure you want to reject the offer of £@(Model.OfferPrice)?</h4>
+
+@Html.ActionLink("Yes, reject it.", "ConfirmReject", new {offerId = Model.OfferId})
+<br/>
+@Html.ActionLink("No, return to list.", "Offers")

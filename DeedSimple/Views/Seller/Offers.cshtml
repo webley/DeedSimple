@@ -1,0 +1,19 @@
+﻿@model IEnumerable<DeedSimple.Models.ViewBuyerOfferModel>
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <a href='@Url.Action("Edit", "Seller", new {id = item.PropertyId})'>
+                <img src='@Url.Action("Index", "Image", new {id = item.MainImage.Id})' height="150"/>
+            </a>
+        </div>
+        <div class="col-md-8">
+            <h4>@Html.DisplayFor(modelItem => item.TagLine)</h4>
+            <h6>@Html.DisplayFor(modelItem => item.OfferPrice)</h6>
+            @Html.ActionLink("Accept Offer", "Accept", new { offerId = item.OfferId })
+            @Html.ActionLink("Reject Offer", "Reject", new { offerId = item.OfferId })
+        </div>
+    </div>
+    <hr/>
+}

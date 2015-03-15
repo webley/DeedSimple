@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using DeedSimple.DataAccess;
 using DeedSimple.Domain;
-using PagedList;
 
 namespace DeedSimple.Processor
 {
@@ -24,6 +24,22 @@ namespace DeedSimple.Processor
             return _propertyRepository.GetPropertiesBySellerId(userId);
         }
 
+        public List<Offer> GetOffersForBuyer(string buyerUserId)
+        {
+            return _propertyRepository.GetOffersByBuyerId(buyerUserId);
+        }
+
+        public Offer GetOffer(long offerId)
+        {
+            return _propertyRepository.GetOffer(offerId);
+        }
+
+        public List<Offer> GetOffersForSeller(string sellerUserId)
+        {
+            var properties = _propertyRepository.GetPropertiesBySellerId(sellerUserId);
+            return properties.SelectMany(prop => prop.OutstandingOffers).ToList();
+        }
+
         public IEnumerable<Property> GetPropertiesFiltered(PropertySortOrder sortOrder, string searchString)
         {
             return _propertyRepository.GetPropertiesFiltered(sortOrder, searchString);
@@ -42,6 +58,16 @@ namespace DeedSimple.Processor
         public bool PropertyCanBeEditedByUser(long propertyId, string userId)
         {
             return _propertyRepository.PropertyCanBeEditedByUser(propertyId, userId);
+        }
+
+        public void AcceptOffer(long offerId)
+        {
+            _propertyRepository.AcceptOffer(offerId);
+        }
+
+        public void RejectOffer(long offerId)
+        {
+            _propertyRepository.RejectOffer(offerId);
         }
     }
 }

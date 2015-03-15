@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using DeedSimple.Domain;
 using DeedSimple.Helpers;
+using DeedSimple.Models;
 using DeedSimple.Models.Seller;
 using DeedSimple.Models.User;
 using DeedSimple.Processor;
@@ -18,13 +19,11 @@ namespace DeedSimple.Controllers
     public class SellerController : Controller
     {
         private readonly IPropertyProcessor _propertyProcessor;
-        private readonly IImageProcessor _imageProcessor;
         private ApplicationUserManager _userManager;
 
-        public SellerController(IPropertyProcessor propertyProcessor, IImageProcessor imageProcessor)
+        public SellerController(IPropertyProcessor propertyProcessor)
         {
             _propertyProcessor = propertyProcessor;
-            _imageProcessor = imageProcessor;
         }
 
         private ApplicationUserManager UserManager
@@ -61,7 +60,7 @@ namespace DeedSimple.Controllers
             return RedirectToAction("Edit", new RouteValueDictionary { { "propertyId", propertyId } });
         }
 
-        public async Task<ActionResult> Edit(int propertyId)
+        public async Task<ActionResult> Edit(long propertyId)
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (!_propertyProcessor.PropertyCanBeEditedByUser(propertyId, user.Id))
@@ -73,9 +72,65 @@ namespace DeedSimple.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(int propertyId)
+        public ActionResult Delete(long propertyId)
         {
             return View(new ConfirmDeletePropertyModel{PropertyId = propertyId});
+        }
+
+        public ActionResult Accept(long offerId)
+        {
+            var offer = _propertyProcessor.GetOffer(offerId);
+            return View(new ConfirmAcceptOfferModel { OfferId = offer.Id, OfferPrice = offer.Price});
+        }
+
+        public ActionResult ConfirmAccept(long offerId)
+        {
+            var userId = User.Identity.GetUserId();
+            var offer = _propertyProcessor.GetOffer(offerId);
+            if (_propertyProcessor.PropertyCanBeEditedByUser(offer.PropertyId, userId))
+            {
+                _propertyProcessor.RejectOffer(offerId);
+            }
+
+            return RedirectToAction("Offers");
+        }
+
+        public ActionResult Reject(long offerId)
+        {
+            var offer = _propertyProcessor.GetOffer(offerId);
+            return View(new ConfirmRejectOfferModel { OfferId = offer.Id, OfferPrice = offer.Price });
+        }
+
+        public ActionResult ConfirmReject(long offerId)
+        {
+            var userId = User.Identity.GetUserId();
+            var offer = _propertyProcessor.GetOffer(offerId);
+            if (_propertyProcessor.PropertyCanBeEditedByUser(offer.PropertyId, userId))
+            {
+                _propertyProcessor.RejectOffer(offerId);
+            }
+
+            return RedirectToAction("Offers");
+        }
+
+        public ActionResult Offers()
+        {
+            var offers = _propertyProcessor.GetOffersForSeller(User.Identity.GetUserId());
+            var model = new List<ViewBuyerOfferModel>();
+            foreach (var offer in offers)
+            {
+                var property = _propertyProcessor.GetProperty(offer.PropertyId);
+                model.Add(new ViewBuyerOfferModel
+                {
+                    OfferId = offer.Id,
+                    PropertyId = offer.PropertyId,
+                    OfferPrice = offer.Price,
+                    TagLine = property.TagLine,
+                    MainImage = property.Images.FirstOrDefault()
+                });
+            }
+
+            return View(model);
         }
     }
 }

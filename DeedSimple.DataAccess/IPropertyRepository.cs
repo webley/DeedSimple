@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using DeedSimple.Domain;
-using PagedList;
 
 namespace DeedSimple.DataAccess
 {
@@ -9,9 +8,15 @@ namespace DeedSimple.DataAccess
         Property GetProperty(long propertyId);
         List<Property> GetProperties(IEnumerable<long> propertyIds);
         List<Property> GetPropertiesBySellerId(string sellerId);
+        Offer GetOffer(long offerId);
+        List<Offer> GetOffersByBuyerId(string buyerId);
         IEnumerable<Property> GetPropertiesFiltered(PropertySortOrder sortOrder, string searchString);
         long AddPropertyForUser(string sellerId, Property property);
         long PlaceOfferForProperty(string buyerUserId, Offer offer);
         bool PropertyCanBeEditedByUser(long propertyId, string userId);
+
+        void DeleteOffer(long offerId);
+        void AcceptOffer(long offerId);
+        void RejectOffer(long offerId);
     }
 }

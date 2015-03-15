@@ -92,6 +92,27 @@ namespace DeedSimple.Controllers
 
         public ActionResult Offers()
         {
+            var offers = _propertyProcessor.GetOffersForBuyer(User.Identity.GetUserId());
+
+            var model = new List<ViewBuyerOfferModel>();
+            foreach (var offer in offers)
+            {
+                var property = _propertyProcessor.GetProperty(offer.PropertyId);
+                model.Add(new ViewBuyerOfferModel
+                {
+                    OfferId = offer.Id,
+                    PropertyId = offer.PropertyId,
+                    OfferPrice = offer.Price,
+                    TagLine = property.TagLine,
+                    MainImage = property.Images.FirstOrDefault()
+                });
+            }
+
+            return View(model);
+        }
+
+        public ActionResult Cancel(long offerId)
+        {
             throw new NotImplementedException();
         }
     }
