@@ -23,19 +23,6 @@ namespace DeedSimple.DataAccess
                 throw new EntityNotFoundException(string.Format("Seller user with ID {0} does not exist.", sellerId));
 
             return user.Properties;
-
-
-            //List<Property> properties = null;
-            //if (user != null)
-            //{
-            //    // TODO: What the hell was I doing here?
-            //    var userPropertyIds = user.Properties.Select(userProp => userProp.Id);
-            //    properties = _context.Properties.Where(prop => userPropertyIds
-            //        .Contains(prop.Id))
-            //        .ToList();
-            //}
-            //
-            //return properties;
         }
 
         public Offer GetOffer(long offerId)
@@ -55,7 +42,7 @@ namespace DeedSimple.DataAccess
             if (user == null)
                 throw new EntityNotFoundException(string.Format("Buyer user with ID {0} does not exist.", buyerId));
 
-            return user.Offers;
+            return _context.Offers.Where(offer => offer.BuyerId.Equals(buyerId)).ToList();
         }
 
         /// <summary>
@@ -63,7 +50,7 @@ namespace DeedSimple.DataAccess
         /// </summary>
         /// <param name="sortOrder">The <see cref="PropertySortOrder"/> that determines the order of the returned properties.</param>
         /// <param name="searchString">Any full string that should be matched (partial matches will fail).</param>
-        /// <returns>A <see cref="IPagedList"/> of Property objects.</returns>
+        /// <returns>An enumerable collection of Property objects.</returns>
         public IEnumerable<Property> GetPropertiesFiltered(PropertySortOrder sortOrder, string searchString = null)
         {
             var properties = from p in _context.Properties
@@ -135,23 +122,22 @@ namespace DeedSimple.DataAccess
             return propertyOut.Id;
         }
 
-        public long PlaceOfferForProperty(string buyerUserId, Offer offer)
+        public long PlaceOfferForProperty(Offer offer)
         {
-            if (string.IsNullOrEmpty(buyerUserId))
+            if (string.IsNullOrEmpty(offer.BuyerId))
                 throw new ArgumentNullException("buyerUserId");
             if (offer == null)
                 throw new ArgumentNullException("offer");
 
-            var buyer = _context.BuyerUsers.Find(buyerUserId);
+            var buyer = _context.BuyerUsers.Find(offer.BuyerId);
             if (buyer == null)
-                throw new EntityNotFoundException(string.Format("Buyer with ID {0} does not exist.", buyerUserId));
+                throw new EntityNotFoundException(string.Format("Buyer with ID {0} does not exist.", offer.BuyerId));
 
             var property = _context.Properties.Find(offer.PropertyId);
             if (property == null)
                 throw new EntityNotFoundException(string.Format("Property with ID {0} does not exist.", offer.PropertyId));
 
             var offerOut = _context.Offers.Add(offer);
-            buyer.Offers.Add(offerOut);
             property.OutstandingOffers.Add(offerOut);
 
             _context.SaveChanges();

@@ -11,6 +11,7 @@ namespace DeedSimple.BLL.Converters
             var offer = new Offer
             {
                 PropertyId = model.PropertyId,
+                BuyerId = model.BuyerUserId,
                 Price = model.OfferPrice
             };
 

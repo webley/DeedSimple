@@ -86,7 +86,7 @@ namespace DeedSimple.Controllers
             var offer = _propertyProcessor.GetOffer(offerId);
             if (_propertyProcessor.PropertyCanBeEditedByUser(offer.PropertyId, userId))
             {
-                _propertyProcessor.RejectOffer(offerId);
+                _propertyProcessor.AcceptOffer(offerId);
             }
 
             return RedirectToAction("Offers");

@@ -12,7 +12,7 @@ namespace DeedSimple.DataAccess
         List<Offer> GetOffersByBuyerId(string buyerId);
         IEnumerable<Property> GetPropertiesFiltered(PropertySortOrder sortOrder, string searchString);
         long AddPropertyForUser(string sellerId, Property property);
-        long PlaceOfferForProperty(string buyerUserId, Offer offer);
+        long PlaceOfferForProperty(Offer offer);
         bool PropertyCanBeEditedByUser(long propertyId, string userId);
 
         void CancelOffer(long offerId);

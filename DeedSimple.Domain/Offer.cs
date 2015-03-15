@@ -6,6 +6,7 @@ namespace DeedSimple.Domain
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+        public string BuyerId { get; set; }
         public long PropertyId { get; set; }
         public decimal Price { get; set; }
         public OfferState State { get; set; }

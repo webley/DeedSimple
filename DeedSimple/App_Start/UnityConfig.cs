@@ -23,6 +23,7 @@ namespace DeedSimple
             container.RegisterType<IPropertyRepository, PropertyRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IImageRepository, ImageRepository>();
+            container.RegisterType<IOfferRepository, OfferRepository>();
             
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

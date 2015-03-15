@@ -55,7 +55,16 @@ namespace DeedSimple.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    if(!string.IsNullOrEmpty(returnUrl))
+                        return RedirectToLocal(returnUrl);
+
+                    switch (user.UserType)
+                    {
+                        case UserType.Buyer:
+                            return RedirectToAction("Index", "Buyer");
+                        case UserType.Seller:
+                            return RedirectToAction("Index", "Seller");
+                    }
                 }
                 else
                 {

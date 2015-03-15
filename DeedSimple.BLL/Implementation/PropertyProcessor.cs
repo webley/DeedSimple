@@ -77,7 +77,7 @@ namespace DeedSimple.BLL.Implementation
 
         public long PlaceOfferForProperty(AddOfferModel offer)
         {
-            return _propertyRepository.PlaceOfferForProperty(offer.BuyerUserId, offer.ToOffer());
+            return _propertyRepository.PlaceOfferForProperty(offer.ToOffer());
         }
 
         public bool PropertyCanBeEditedByUser(long propertyId, string userId)

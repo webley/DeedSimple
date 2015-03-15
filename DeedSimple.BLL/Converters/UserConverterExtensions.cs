@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DeedSimple.Domain;
+using DeedSimple.ViewModel.Offer;
 using DeedSimple.ViewModel.User;
 
 namespace DeedSimple.BLL.Converters
@@ -26,12 +28,12 @@ namespace DeedSimple.BLL.Converters
             return user;
         }
 
-        public static ViewBuyerUserModel ToViewBuyerUserModel(this BuyerUser buyerEntity, Image mainImage, string tagLine)
+        public static ViewBuyerUserModel ToViewBuyerUserModel(this BuyerUser buyerEntity, List<ViewOfferModel> offers)
         {
             var model = new ViewBuyerUserModel
             {
                 Id = buyerEntity.Id,
-                Offers = buyerEntity.Offers.Select(offer => offer.ToViewOfferModel(mainImage, tagLine)).ToList()
+                Offers = offers
             };
 
             return model;
